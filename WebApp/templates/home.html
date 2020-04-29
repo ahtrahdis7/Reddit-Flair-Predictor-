@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Reddit India</title>
+    <script src="static/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <br>
+    <div class="container">
+        <div class="jumbotron">
+            <h1> FLAIROID</h1>
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-group col s12">
+                        <input type="text" class="form-control" id="addLink" placeholder="paste the post link" />
+                        <div>
+                            <button for="addLink" class="btn  btn-primary" type="button" onclick="javascript:sendLink()">PredictFlair</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <br>
+            <form class="col s12 ">
+                <div class="row ">
+                    <div class="input-group col s12 ">
+                        <input type="text" class="form-control" id="addTitle" placeholder="paste the post-title or type it " />
+                        <div class="input-group-append">
+                            <button for="addTitle" class="btn  btn-primary" type="button" onclick="javascript:sendTitle()">PredictFlair</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br><br>
+    <div class="container">
+        <div class="jumbotron">
+            <p id='flair'></p>
+            <!-- <button id="clrbtn" onclick="javascript:clear()" class='btn btn-outline-secondary'>clear</button> -->
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+
+<script>
+    function sendLink() {
+        let link = $("#addLink ").val()
+        $("#addLink").val('')
+        $.ajax({
+            url: '/getLink?link=' + link,
+            type: 'GET',
+            success: function(response) {
+                flair.innerText = response['flair']
+            }
+        });
+    }
+
+    function sendTitle() {
+        let title = $("#addTitle").val()
+        $("#addTitle").val('')
+        $.ajax({
+            url: '/getTitle?title=' + title,
+            type: 'GET',
+            success: function(response) {
+                flair.innerText = response['flair']
+            }
+        });
+    }
+
+    // function clear() {
+    //     $("#flair").value("")
+    // }
+</script>
